@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Milestone 2: Mobility</title>
+</head>
+<body>
+    <h1>Milestone 2: Mobility</h1>
+    <h2>Robot steering</h2>
+    <div class = "code-snippet-image">
+        <img src = "image/steering-led-tinkercad.png" alt = "Robot steering demonstrated using LEDs" width = "600">
+        <pre>
+            <code>
+                // Basic robot steering
+                // 2 H-bridge
+
+                int main(void) {
+                    // Set LED pins as outputs
+                    DDRB = 0b00001111;
+                    while(1) {
+                        // Call functions to steer in different directions
+                        drive_forward(1000);
+                        drive_backward(1000);
+                        turn_right(1000);
+                        turn_left(1000);
+                    }
+                }
+                // Functions for steering -  drive forward, turn right, etc.
+                int drive_forward(int t) { // Green LEDs on, red LEDs off
+                    PORTB |= 0b00001010; // Set pins 9 and 11 high 
+                    PORTB &= 0b11111010;  // Set pins 8 and 10 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+                int drive_backward(int t) { // Red LEDs on, green LEDs off
+                    PORTB |= 0b00000101;  // Set pins 8 and 10 high
+                    PORTB &= 0b11110101;  // Set pins 9 and 11 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+                int turn_right(int t) { // Left green LED on, right red LED on
+                    PORTB |= 0b00001001;  // Set pins 8 and 11 high
+                    PORTB &= 0b11111001;  // Set pins 9 and 10 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+                int turn_left(int t) { // Right green LED on, left red LED on
+                    PORTB |= 0b00000110;  // Set pins 9 and 10 high
+                    PORTB &= 0b11110110;  // Set pins 8 and 11 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+            </code>
+        </pre>
+    </div>
+
+    <p>LEDs were used instead of motors to demonstrate this functionality, on TinkerCad.</p>
+    
+    <h2>DC Motor Speed Control (Timer 2 PWM)</h2>
+    <div class = "code-snippet-image">
+        <img src = "image/steering-led-tinkercad.png" alt = "Robot steering demonstrated using LEDs" width = "600">
+        <pre>
+            <code>
+                // Basic robot steering
+                // 2 H-bridge
+
+                int main(void) {
+                    // Set LED pins as outputs
+                    DDRB = 0b00001111;
+                    while(1) {
+                        // Call functions to steer in different directions
+                        drive_forward(1000);
+                        drive_backward(1000);
+                        turn_right(1000);
+                        turn_left(1000);
+                    }
+                }
+                // Functions for steering -  drive forward, turn right, etc.
+                int drive_forward(int t) { // Green LEDs on, red LEDs off
+                    PORTB |= 0b00001010; // Set pins 9 and 11 high 
+                    PORTB &= 0b11111010;  // Set pins 8 and 10 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+                int drive_backward(int t) { // Red LEDs on, green LEDs off
+                    PORTB |= 0b00000101;  // Set pins 8 and 10 high
+                    PORTB &= 0b11110101;  // Set pins 9 and 11 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+                int turn_right(int t) { // Left green LED on, right red LED on
+                    PORTB |= 0b00001001;  // Set pins 8 and 11 high
+                    PORTB &= 0b11111001;  // Set pins 9 and 10 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+                int turn_left(int t) { // Right green LED on, left red LED on
+                    PORTB |= 0b00000110;  // Set pins 9 and 10 high
+                    PORTB &= 0b11110110;  // Set pins 8 and 11 low
+                    _delay_ms(t);         // Wait for t milliseconds
+                }
+            </code>
+        </pre>
+    </div>
+
+    <p>The robot motors are different speed. To ensure that the robots drive a straight line, we have to change the duty cycle of the motors. We generate pulse width modulation.</p>
+    
+</body>
+</html>

@@ -1,0 +1,24 @@
+body {
+    font-family: "Albert Sans", sans-serif;
+    color: #37383C;
+    background-color: #fcfcfc;
+    /* color: #84B5C5; */
+    text-align: left;
+    margin-left: 100px;
+    margin-right: 100px;
+
+}
+
+.milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+
+.code-snippet-image {
+    display: flex;
+    align-items: center;
+}
+
