@@ -11,13 +11,72 @@
 </head>
 <body>
     <h1>Milestone 3: Color Sensing and Border Detection</h1>
-    <p>LEDs were used instead of motors to demonstrate this functionality, on TinkerCad.</p>
-   <img>
-   <pre>
-    <code>
-        code from lecture
-    </code>
-   </pre>
+    <h2>Color Sensing</h2>
+    <div class = "code-snippet-image">
+        <img src = "image/color-sensor-circuit.png" alt = "Color sensor circuit demonstration with LEDs" width = "600">
+        <pre>
+            <code>
+                // Color Sensing
+                // TCS3200 Color Sensor
+                // External sensor, serial communication, interrupts, timers
+                int main(void)
+                {
+                  // Call initColor function
+                  initColor();
+                
+                  sei(); // Enable interrupt
+                
+                  Serial.begin(9600); // For debugging, initialize serial communication
+                  while(1) 
+                  {
+                    // Call getColor function
+                    getColor(); // This function call enables interrupt
+                
+                    // Print the "period"
+                    Serial.println(period);
+                
+                    // Turn LED on if period is above certain threshold
+                    if (period > 200) {
+                      PORTB = 0b00000001; // Turn LED on
+                    } else {
+                      PORTB = 0b00000000; // Turn LED off
+                    }
+                    // Add a short delay (less than a second)
+                    _delay_ms(500); // Half a second -> monitar display period easier to read
+                  }
+                
+                }
+            </code>
+        </pre>
+    </div>
+
+    <p>
+        See GitHub Repository for full code.
+        <br>
+        The TCS3200 Color Sensor...
+    </p>
+
+    <h2>Border Detection</h2>
+    <div class = "code-snippet-image">
+        <img src = "image/boarder-detection-circuit.png" alt = "QTI Line Detection demonstration" width = "600">
+        <pre>
+            <code>
+                // Border Detection
+                // QTI Line Sensor
+                int main(void)
+                {
+                  
+                }
+            </code>
+        </pre>
+    </div>
+
+    <p>
+        See GitHub Repository for full code.
+        <br>
+        The QTI Line Sensor...
+    </p>
+    
     
 </body>
 </html>
