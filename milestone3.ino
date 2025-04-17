@@ -92,7 +92,7 @@ int getColor()
   Serial.print("Timer in clock ticks: ");
   Serial.println(timer);
   period = (timer*(0.0625))*2; // 6.25ns = 0.0625μs
-  return period // Return value as a variable (period)
+  return period; // Return value as a variable (period)
 
 }
 
@@ -107,11 +107,31 @@ int main(void)
 
   sei();
 
+  // Call getColor function
+  getColor();
+   // Control robot motion (steering w/ DC motors)
+    // variable for initial
+    // If period is above certain ____ (detects on blue) -> Need to measure in lab
+    if ((period > 290) && (period < 315)) { 
+      // Set a variable to Blue
+      color_current = B;
+    } else if ((period < 290) && (period > 150)) {
+      // Set a variable yellow
+      color_current = Y;
+    } else {
+      color_current = O;
+    }
+
+    int counter = 0;
+    
+
   while(1) 
   {
 
     // Call getColor function
     getColor();
+
+    
 
     // Print the "period" -> serial communication
     Serial.print("Period in μs: ");
@@ -120,40 +140,40 @@ int main(void)
     // Add short delay (less than a second) for readability in monitor
     _delay_ms(500); // 1/2 a second
 
-    /* Control robot motion (steering w/ DC motors)
-     * 
-     *
-     */ 
-    // variable for initial
-    // If period is above certain ____ (detects on blue) -> Need to measure in lab
-    if (period > 200) { 
+    if ((period > 290) && (period < 315)) { 
       // Set a variable to Blue
-      color_current = B;
-    } else {
+      color_next = B;
+    } else if ((period < 290) && (period > 150)) {
       // Set a variable yellow
-      color_current = Y;
+      color_next = Y;
+    } else {
+      color_next = O;
     }
 
-    
-    if (color_current == color_next) {
-      // Move forward
-      driveForward();
 
-    } else { // color_current != color_next
-      // Stop immediately
+    if (color_current == color_next) {
+      driveForward();
+    } else {
+      counter += 1;
+      if (counter == 2) {
+        break;
+      }
       stop(10);
       // Turn 180 degrees
       turnRight(900);
-        // Move forward
-        driveForward();
-        // Stop when boarder detected (hard code to be after 180 degrees turn -> some if statement)
-        // if statement/function
- 
+      
 
     }
 
-
   }
+
+    /*
+     * Blue ~ 310 period
+     * Black ~ 330 period
+     * Yellow ~ 200 period
+     * Floor ~ na
+
+    */
 
 }
 
@@ -189,3 +209,4 @@ int delay(int n) {
   for(int i=0; i<n; i++){
      _delay_ms(1);
   }
+}
